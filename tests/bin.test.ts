@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('bin', () => {
   it('runs the command', async () => {
-    vi.spyOn(process, 'argv', 'get').mockReturnValue(['node', 'dynamodb-docs', '--help']);
+    vi.spyOn(process, 'argv', 'get').mockReturnValue(['node', 'generate-dynamodb-docs', '--help']);
     const mockedWrite = vi.spyOn(process.stdout, 'write').mockImplementation(vi.fn());
     vi.spyOn(process, 'exit').mockImplementation((code) => {
       if (typeof code === 'number') {
@@ -11,6 +11,6 @@ describe('bin', () => {
       throw new Error('Process exited');
     });
     await expect(import('../src/bin.js')).rejects.toThrow(/Process exited with code 0/);
-    expect(mockedWrite).toHaveBeenCalledWith(expect.stringMatching(/Usage: dynamodb-docs/) as string);
+    expect(mockedWrite).toHaveBeenCalledWith(expect.stringMatching(/Usage: generate-dynamodb-docs/) as string);
   });
 });

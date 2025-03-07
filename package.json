@@ -1,12 +1,12 @@
 {
-  "name": "dynamodb-docs",
+  "name": "generate-dynamodb-docs",
   "version": "0.1.0",
   "description": "Generate documentation about your DynamoDB entities",
   "type": "module",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "dynamodb-docs": "./dist/bin.js"
+    "generate-dynamodb-docs": "./dist/bin.js"
   },
   "files": [
     "./dist"
@@ -28,14 +28,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stschulte/dynamodb-docs.git"
+    "url": "git+https://github.com/stschulte/generate-dynamodb-docs.git"
   },
   "author": "Stefan Schulte <stschulte@posteo.de>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stschulte/dynamodb-docs/issues"
+    "url": "https://github.com/stschulte/generate-dynamodb-docs/issues"
   },
-  "homepage": "https://github.com/stschulte/dynamodb-docs#readme",
+  "homepage": "https://github.com/stschulte/generate-dynamodb-docs#readme",
   "dependencies": {
     "commander": "^13.1.0",
     "yaml": "^2.7.0"

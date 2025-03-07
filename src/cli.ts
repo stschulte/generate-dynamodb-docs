@@ -20,7 +20,7 @@ type Options = {
 export async function cli(args: string[]): Promise<number> {
   const command = new Command();
   command
-    .name('dynamodb-docs')
+    .name('generate-dynamodb-docs')
     .version('0.1.0')
     .option('--output-file [output-file]', 'file to modify. If not specified prints on stdout')
     .addOption(new Option('--output-type [output-type]', 'Output type').choices(['markdown', 'typescript']))

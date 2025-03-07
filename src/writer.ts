@@ -51,7 +51,7 @@ export async function replaceFile<R>(path: string, callback: (stream: WriteStrea
   try {
     const statResult = statSync(path, { throwIfNoEntry: false });
     const filename = basename(path);
-    tmpDir = mkdtempSync(join('.', 'dynamodb-docs'));
+    tmpDir = mkdtempSync(join('.', 'generate-dynamodb-docs'));
     const newFilePath = join(tmpDir, filename);
 
     /* We want to copy the file mode (least significant 12 bits), not the file type information */

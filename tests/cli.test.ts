@@ -36,7 +36,7 @@ describe('cli', () => {
       expect(existsSync(join(tmpDir, 'README.md'))).toBeFalsy();
       const rc = await cli([
         'node',
-        'dynamodb-docs',
+        'generate-dynamodb-docs',
         '--output-file',
         join(tmpDir, 'README.md'),
         '--mode',
@@ -55,7 +55,7 @@ describe('cli', () => {
       expect(existsSync(join(tmpDir, 'dynamodb.ts'))).toBeFalsy();
       const rc = await cli([
         'node',
-        'dynamodb-docs',
+        'generate-dynamodb-docs',
         '--output-file',
         join(tmpDir, 'dynamodb.ts'),
         '--output-type',
@@ -78,7 +78,7 @@ describe('cli', () => {
 
       const rc = await cli([
         'node',
-        'dynamodb-docs',
+        'generate-dynamodb-docs',
         '--output-file',
         join(tmpDir, 'README.md'),
         '--mode',
@@ -96,7 +96,7 @@ describe('cli', () => {
 
       const rc = await cli([
         'node',
-        'dynamodb-docs',
+        'generate-dynamodb-docs',
         '--output-file',
         join(tmpDir, 'dynamodb.ts'),
         '--output-type',
@@ -127,7 +127,7 @@ describe('cli', () => {
 
       const rc = await cli([
         'node',
-        'dynamodb-docs',
+        'generate-dynamodb-docs',
         join(tmpDir, 'dynamodb.yml'),
       ]);
       expect(rc).toBe(0);
@@ -150,7 +150,7 @@ describe('cli', () => {
 
       const rc = await cli([
         'node',
-        'dynamodb-docs',
+        'generate-dynamodb-docs',
         '--output-type',
         'typescript',
         join(tmpDir, 'dynamodb.yml'),

@@ -1,12 +1,11 @@
 # DynamoDB Docs
 
-[![CI Status](https://github.com/stschulte/dynamodb-docs/workflows/CI/badge.svg)](https://github.com/stschulte/dynamodb-docs/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/stschulte/dynamodb-docs/graph/badge.svg?token=7WCKTOM39O)](https://codecov.io/gh/stschulte/dynamodb-docs)
-[![npm version](https://badge.fury.io/js/dynamodb-docs.svg)](https://badge.fury.io/js/dynamodb-docs)
+[![CI Status](https://github.com/stschulte/generate-dynamodb-docs/workflows/CI/badge.svg)](https://github.com/stschulte/generate-dynamodb-docs/actions/workflows/test.yml)
+[![npm version](https://badge.fury.io/js/generate-dynamodb-docs.svg)](https://badge.fury.io/js/generate-dynamodb-docs)
 
 Generate documentation about your DynamoDB table from a `dynamodb.yml` file.
 
-## Why do you want to use dynamodb-docs
+## Why do you want to use generate-dynamodb-docs
 
 AWS DynamoDB is great to store different entities in a single table (see
 also [single-table design][1].
@@ -21,10 +20,10 @@ to be used in your code.
 ## Install
 
 Navigate to your repository that contains your GitHub action and
-install `dynamodb-docs` as a development dependency:
+install `generate-dynamodb-docs` as a development dependency:
 
 ```
-npm install --save-dev dynamodb-docs
+npm install --save-dev generate-generate-dynamodb-docs
 ```
 
 ## Example
@@ -67,7 +66,7 @@ entities:
 you can now generate documentation out of this:
 
 ```
-% npx dynamodb-docs --output-type markdown dynamodb.yml
+% npx generate-dynamodb-docs --output-type markdown dynamodb.yml
 ### Author
 
 An author describes a person that writes blog posts
@@ -93,7 +92,7 @@ A post can be seen as a news article.
 Or generate TypeScript types:
 
 ```
-% npx dynamodb-docs --output-type typescript dynamodb.yml
+% npx generate-dynamodb-docs --output-type typescript dynamodb.yml
 // DynamoDB Entity Author
 type DynamoDBAuthor = {
   name: AttributeValue.SMember;
@@ -122,10 +121,10 @@ everything in here will be replaced
 Some existing text in your README.md. It will not be overwritten.
 ```
 
-Now run `dynamodb-docs` in `inject`  mode:
+Now run `generate-dynamodb-docs` in `inject`  mode:
 
 ```
-npx dynamodb-docs --output-type markdown --mode inject --output-file README.md dynamodb.yml
+npx generate-dynamodb-docs --output-type markdown --mode inject --output-file README.md dynamodb.yml
 ```
 
 In case you make use of prettier and/or linter, I recommend to disable it for
@@ -160,7 +159,7 @@ import { AttributeValue } from '@aws-sdk/client-dynamodb'
 Now run the following command to inject the actual typescript definition:
 
 ```
-npx dynamodb-docs --output-type typescript --mode inject --output-file dynamodb.ts dynamodb.yml
+npx generate-dynamodb-docs --output-type typescript --mode inject --output-file dynamodb.ts dynamodb.yml
 ```
 
 
@@ -169,8 +168,8 @@ You can also create a task in your `package.json`:
 ```json
 {
     "scripts": {
-        "gen:docs:md": "dynamodb-docs --output-type markdown --output-file README.md --mode inject dynamodb.yml",
-        "gen:docs:ts": "dynamodb-docs --output-type typescript --output-file src/dynamodb.ts --mode inject dynamodb.yml",
+        "gen:docs:md": "generate-dynamodb-docs --output-type markdown --output-file README.md --mode inject dynamodb.yml",
+        "gen:docs:ts": "generate-dynamodb-docs --output-type typescript --output-file src/dynamodb.ts --mode inject dynamodb.yml",
         "gen:docs": "npm run gen:docs:md && npm run gen:docs:ts"
     }
 }
