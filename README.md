@@ -1,6 +1,7 @@
 # DynamoDB Docs
 
 [![CI Status](https://github.com/stschulte/dynamodb-docs/workflows/CI/badge.svg)](https://github.com/stschulte/dynamodb-docs/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/stschulte/dynamodb-docs/graph/badge.svg?token=7WCKTOM39O)](https://codecov.io/gh/stschulte/dynamodb-docs)
 [![npm version](https://badge.fury.io/js/dynamodb-docs.svg)](https://badge.fury.io/js/dynamodb-docs)
 
 Generate documentation about your DynamoDB table from a `dynamodb.yml` file.
