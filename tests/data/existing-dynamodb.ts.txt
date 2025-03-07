@@ -1,0 +1,5 @@
+import { AttributeValue } from '@aws-sdk/client-dynamodb'
+
+/* BEGIN_DYNAMODB_DOCS */
+// Everything in here will be overwritten
+/* END_DYNAMODB_DOCS */

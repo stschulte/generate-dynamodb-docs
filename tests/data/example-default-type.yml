@@ -1,0 +1,29 @@
+description: "Store authors and their blog posts"
+
+defaults:
+  typescriptType: AttributeValue.SMember
+
+entities:
+  Post:
+    typescriptName: DynamoDBPost
+    description: |-
+      A single post.
+
+      A post can be seen as a news article.
+    attributes:
+      title:
+        description: The title of the post
+      body:
+        description: The actual article
+
+  Author:
+    typescriptName: DynamoDBAuthor
+    description: |-
+      An author describes a person that writes blog posts
+      A single author can write multiple posts
+    attributes:
+      name:
+        description: The name of the author
+      nPosts:
+        description: The number of posts of the author
+        typescriptType: AttributeValue.NMember
