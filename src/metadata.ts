@@ -1,6 +1,5 @@
 export type Entries<T> = T extends { [s: string]: infer U } ? [string, U] : never;
 
-// https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions
 export type Metadata = {
   defaults?: {
     optional?: boolean;
