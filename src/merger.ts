@@ -27,9 +27,7 @@ export async function* merge(path: string, mergeIterator: Iterable<string>, docu
     if (start_pattern.exec(line)) {
       yield line;
       yield '\n';
-      for (const chunk of mergeIterator) {
-        yield chunk;
-      }
+      yield* mergeIterator;
       shouldCopy = false;
     }
     else if (end_pattern.exec(line)) {

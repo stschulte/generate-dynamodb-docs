@@ -5,6 +5,15 @@ import { sortEntries } from './metadata.js';
 export function* generateMarkdown(configuration: Metadata): Generator<string, undefined, unknown> {
   let firstSection = true;
   const defaultOptional = configuration.defaults?.optional ?? false;
+  const config = configuration.config?.markdown ?? {};
+  const { post, pre } = config;
+
+  if (pre) {
+    yield pre;
+    yield '\n';
+    firstSection = false;
+  }
+
   for (const [entityName, entity] of Object.entries(configuration.entities).sort(sortEntries)) {
     if (firstSection) {
       firstSection = false;
@@ -19,9 +28,15 @@ export function* generateMarkdown(configuration: Metadata): Generator<string, un
     yield '| Name | Description | Required |\n';
     yield '|------|-------------|:--------:|\n';
     for (const [attributeName, attribute] of Object.entries(entity.attributes).sort(sortEntries)) {
-      const isRequired = attribute.optional === undefined ? !defaultOptional : !attribute.optional
+      const isRequired = attribute.optional === undefined ? !defaultOptional : !attribute.optional;
       yield `| ${mdAnchor(entityName, attributeName)} | ${mdString(attribute.description)} | ${mdBoolean(isRequired)} |\n`;
     }
+  }
+
+  if (post) {
+    yield '\n';
+    yield post;
+    yield '\n';
   }
 }
 
@@ -29,6 +44,15 @@ export function* generateTypescript(configuration: Metadata): Generator<string, 
   let firstSection = true;
   const defaultType = configuration.defaults?.typescriptType ?? 'unknown';
   const defaultOptional = configuration.defaults?.optional ?? false;
+  const config = configuration.config?.typescript ?? {};
+  const { post, pre } = config;
+
+  if (pre) {
+    yield pre;
+    yield '\n';
+    firstSection = false;
+  }
+
   for (const [entityName, entity] of Object.entries(configuration.entities).sort(sortEntries)) {
     if (firstSection) {
       firstSection = false;
@@ -43,6 +67,12 @@ export function* generateTypescript(configuration: Metadata): Generator<string, 
       yield `  ${attributeName}${(attribute.optional ?? defaultOptional) ? '?' : ''}: ${attribute.typescriptType ?? defaultType};\n`;
     }
     yield `}\n`;
+  }
+
+  if (post) {
+    yield '\n';
+    yield post;
+    yield '\n';
   }
 }
 

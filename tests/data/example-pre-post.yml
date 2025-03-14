@@ -1,0 +1,57 @@
+description: "Store authors and their blog posts"
+
+config:
+  markdown:
+    pre: All entities shall be stored in the same DynamoDB table
+    post: "[rfc3339]: https://www.rfc-editor.org/rfc/rfc3339"
+  typescript:
+    pre: |-
+      type POST_PK = { S: `AUTHOR#${string}` }
+      type POST_SK = { S: `POST#${string}` }
+
+      export function generatePostKey(author: string, title: string): {pk: POST_PK, sk: POST_SK} {
+        return {
+          pk: { S: `AUHOR#${author}` },
+          sk: { S: `POST#${title}` },
+        }
+      }
+
+entities:
+  Post:
+    typescriptName: DynamoDBPost
+    description: |-
+      A single post.
+
+      A post can be seen as a news article.
+    attributes:
+      pk:
+        description: "Partition key. Must follow `AUTHOR#<name of author>`"
+        typescriptType: POST_PK
+      sk:
+        description: "Sort key. Must follow `POST#<title>`"
+        typescriptType: POST_SK
+      title:
+        description: The title of the post
+      publishedAt:
+        description: |-
+          The date when the article was published. This
+          should follow [RFC3339][rfc3339]
+        typescriptType: AttributeValue.SMember
+      body:
+        description: The actual article
+      tags:
+        description: A list of tags
+        typescriptType: AttributeValue.SSMember
+        optional: true
+
+  Author:
+    typescriptName: DynamoDBAuthor
+    description: |-
+      An author describes a person that writes blog posts
+      A single author can write multiple posts
+    attributes:
+      name:
+        description: The name of the author
+      nPosts:
+        description: The number of posts of the author
+        typescriptType: AttributeValue.NMember

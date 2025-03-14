@@ -1,0 +1,25 @@
+type POST_PK = { S: `AUTHOR#${string}` }
+type POST_SK = { S: `POST#${string}` }
+
+export function generatePostKey(author: string, title: string): {pk: POST_PK, sk: POST_SK} {
+  return {
+    pk: { S: `AUHOR#${author}` },
+    sk: { S: `POST#${title}` },
+  }
+}
+
+// DynamoDB Entity Author
+type DynamoDBAuthor = {
+  name: unknown;
+  nPosts: AttributeValue.NMember;
+}
+
+// DynamoDB Entity Post
+type DynamoDBPost = {
+  body: unknown;
+  pk: POST_PK;
+  publishedAt: AttributeValue.SMember;
+  sk: POST_SK;
+  tags?: AttributeValue.SSMember;
+  title: unknown;
+}
