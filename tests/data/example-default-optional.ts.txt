@@ -7,5 +7,5 @@ type DynamoDBAuthor = {
 // DynamoDB Entity Post
 type DynamoDBPost = {
   body?: AttributeValue.SMember;
-  title?: AttributeValue.SMember;
+  title: AttributeValue.SMember;
 }

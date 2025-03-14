@@ -19,7 +19,8 @@ export function* generateMarkdown(configuration: Metadata): Generator<string, un
     yield '| Name | Description | Required |\n';
     yield '|------|-------------|:--------:|\n';
     for (const [attributeName, attribute] of Object.entries(entity.attributes).sort(sortEntries)) {
-      yield `| ${mdAnchor(entityName, attributeName)} | ${mdString(attribute.description)} | ${mdBoolean(attribute.optional ?? defaultOptional)} |\n`;
+      const isRequired = attribute.optional === undefined ? !defaultOptional : !attribute.optional
+      yield `| ${mdAnchor(entityName, attributeName)} | ${mdString(attribute.description)} | ${mdBoolean(isRequired)} |\n`;
     }
   }
 }
