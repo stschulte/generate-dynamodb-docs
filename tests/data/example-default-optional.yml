@@ -14,6 +14,7 @@ entities:
     attributes:
       title:
         description: The title of the post
+        optional: false
       body:
         description: The actual article
 

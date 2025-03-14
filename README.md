@@ -163,7 +163,6 @@ Now run the following command to inject the actual typescript definition:
 npx generate-dynamodb-docs --output-type typescript --mode inject --output-file dynamodb.ts dynamodb.yml
 ```
 
-
 You can also create a task in your `package.json`:
 
 ```json
@@ -178,6 +177,52 @@ You can also create a task in your `package.json`:
 
 And then simply execute `npm run gen:docs` to regenerate your documentation
 after updating `dynamodb.yml`
+
+## Generate pre and post sections
+
+You can add custom text in your markdown above and below the generated text.
+This can be helpful if you specify custom typescript types and want the definition
+of those types to also be part of the generated code. Or you use references
+in your markdown table that you want to define as well.
+
+Here is an example
+
+```yaml
+defaults:
+  typescriptType: AttributeValue.SMember
+
+config:
+  markdown:
+    post: "[rfc3339]: https://www.rfc-editor.org/rfc/rfc3339"
+  typescript:
+    pre: |-
+      type POST_PK = { S: `AUTHOR#${string}` }
+      type POST_SK = { S: `POST#${string}` }
+
+entities:
+  Post:
+    typescriptName: DynamoDBPost
+    attributes:
+      pk:
+        description: "Partition key. Must follow `AUTHOR#<name of author>`"
+        typescriptType: POST_PK
+      sk:
+        description: "Sort key. Must follow `POST#<title>`"
+        typescriptType: POST_SK
+      title:
+        description: The title of the post
+      publishedAt:
+        description: |-
+          The date when the article was published. This
+          should follow [RFC3339][rfc3339]
+      body:
+        description: The actual article
+```
+
+This ensures the reference `rfc3339` in the generated markdown table for
+the `publishedAt` attribute will be valid in the final markdown file and
+the typescript type `POST_PK` and `POST_SK` are also defined in the generated
+typescript output.
 
 ## Running test
 

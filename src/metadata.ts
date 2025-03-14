@@ -1,6 +1,16 @@
 export type Entries<T> = T extends { [s: string]: infer U } ? [string, U] : never;
 
 export type Metadata = {
+  config?: {
+    markdown?: {
+      post?: string;
+      pre?: string;
+    };
+    typescript?: {
+      post?: string;
+      pre?: string;
+    };
+  };
   defaults?: {
     optional?: boolean;
     typescriptType?: string;

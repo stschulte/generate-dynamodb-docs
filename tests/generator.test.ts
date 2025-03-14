@@ -90,6 +90,12 @@ describe('generateMarkdown', () => {
     const expectedResult = readTestData('example-default-type.md');
     expect(Array.from(generateMarkdown(testdata)).join('')).toStrictEqual(expectedResult);
   });
+
+  it('uses pre and post sections', () => {
+    const testdata = parse(readTestData('example-pre-post.yml')) as Metadata;
+    const expectedResult = readTestData('example-pre-post.md');
+    expect(Array.from(generateMarkdown(testdata)).join('')).toStrictEqual(expectedResult);
+  });
 });
 
 describe('generateTypescript', () => {
@@ -108,6 +114,12 @@ describe('generateTypescript', () => {
   it('uses the default type value', () => {
     const testdata = parse(readTestData('example-default-type.yml')) as Metadata;
     const expectedResult = readTestData('example-default-type.ts.txt');
+    expect(Array.from(generateTypescript(testdata)).join('')).toStrictEqual(expectedResult);
+  });
+
+  it('uses pre and post sections', () => {
+    const testdata = parse(readTestData('example-pre-post.yml')) as Metadata;
+    const expectedResult = readTestData('example-pre-post.ts.txt');
     expect(Array.from(generateTypescript(testdata)).join('')).toStrictEqual(expectedResult);
   });
 });
