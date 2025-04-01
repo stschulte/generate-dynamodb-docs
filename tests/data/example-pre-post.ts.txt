@@ -9,13 +9,13 @@ export function generatePostKey(author: string, title: string): {pk: POST_PK, sk
 }
 
 // DynamoDB Entity Author
-type DynamoDBAuthor = {
+export type DynamoDBAuthor = {
   name: unknown;
   nPosts: AttributeValue.NMember;
 }
 
 // DynamoDB Entity Post
-type DynamoDBPost = {
+export type DynamoDBPost = {
   body: unknown;
   pk: POST_PK;
   publishedAt: AttributeValue.SMember;

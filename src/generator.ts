@@ -62,7 +62,7 @@ export function* generateTypescript(configuration: Metadata): Generator<string, 
     }
 
     yield `// DynamoDB Entity ${entityName}\n`;
-    yield `type ${entity.typescriptName} = {\n`;
+    yield `export type ${entity.typescriptName} = {\n`;
     for (const [attributeName, attribute] of Object.entries(entity.attributes).sort(sortEntries)) {
       yield `  ${attributeName}${(attribute.optional ?? defaultOptional) ? '?' : ''}: ${attribute.typescriptType ?? defaultType};\n`;
     }

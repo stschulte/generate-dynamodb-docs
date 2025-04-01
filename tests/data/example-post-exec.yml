@@ -1,0 +1,52 @@
+description: "Store authors and their blog posts"
+
+config:
+  typescript:
+    pre: |-
+      namespace AttributeValue {
+        export type SMember = {
+          S: string;
+        }
+
+        export type SSMember = {
+          SS: string[];
+        }
+
+        export type NMember = {
+          N: number;
+        }
+      }
+    post-exec:
+      - name: Validate
+        cmd: /bin/true
+        args:
+          - '--will-be-ignored'
+
+entities:
+  Post:
+    typescriptName: DynamoDBPost
+    description: |-
+      A single post.
+
+      A post can be seen as a news article.
+    attributes:
+      title:
+        description: The title of the post
+      body:
+        description: The actual article
+      tags:
+        description: A list of tags
+        typescriptType: AttributeValue.SSMember
+        optional: true
+
+  Author:
+    typescriptName: DynamoDBAuthor
+    description: |-
+      An author describes a person that writes blog posts
+      A single author can write multiple posts
+    attributes:
+      name:
+        description: The name of the author
+      nPosts:
+        description: The number of posts of the author
+        typescriptType: AttributeValue.NMember

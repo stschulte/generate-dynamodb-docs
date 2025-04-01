@@ -69,6 +69,68 @@ describe('cli', () => {
 
       expect(readFileSync(join(tmpDir, 'dynamodb.ts'), 'utf8')).toStrictEqual(readTestData('example.ts.txt'));
     });
+
+    it('runs post actions on file', async () => {
+      const logSpy = vi.spyOn(console, 'log').mockImplementation(vi.fn());
+      copyFileSync(testData('example-post-exec.yml'), join(tmpDir, 'dynamodb.yml'));
+
+      const rc = await cli([
+        'node',
+        'generate-dynamodb-docs',
+        '--output-file',
+        join(tmpDir, 'dynamodb.ts'),
+        '--output-type',
+        'typescript',
+        '--mode',
+        'overwrite',
+        join(tmpDir, 'dynamodb.yml'),
+      ]);
+
+      expect(logSpy).toHaveBeenCalledWith(expect.stringMatching(/Executing post-exec Validate/));
+      expect(logSpy).toHaveBeenCalledWith('Executing post-exec Validate completed');
+      expect(rc).toBe(0);
+    });
+
+    it('fails with last return code when post actions fails', async () => {
+      const logSpy = vi.spyOn(console, 'log').mockImplementation(vi.fn());
+      copyFileSync(testData('example-post-exec-fail.yml'), join(tmpDir, 'dynamodb.yml'));
+
+      const rc = await cli([
+        'node',
+        'generate-dynamodb-docs',
+        '--output-file',
+        join(tmpDir, 'dynamodb.ts'),
+        '--output-type',
+        'typescript',
+        '--mode',
+        'overwrite',
+        join(tmpDir, 'dynamodb.yml'),
+      ]);
+
+      expect(rc).toBe(1);
+      expect(logSpy).toHaveBeenCalledWith(expect.stringMatching(/Executing post-exec Validate/));
+      expect(logSpy).toHaveBeenCalledWith('Executing post-exec Validate failed (rc=1)');
+    });
+
+    it('fails with when post action cannot be executed', async () => {
+      const logSpy = vi.spyOn(console, 'log').mockImplementation(vi.fn());
+      copyFileSync(testData('example-post-exec-noavail.yml'), join(tmpDir, 'dynamodb.yml'));
+
+      const promise = cli([
+        'node',
+        'generate-dynamodb-docs',
+        '--output-file',
+        join(tmpDir, 'dynamodb.ts'),
+        '--output-type',
+        'typescript',
+        '--mode',
+        'overwrite',
+        join(tmpDir, 'dynamodb.yml'),
+      ]);
+
+      await expect(promise).rejects.toThrow(/ENOENT/);
+      expect(logSpy).toHaveBeenCalledWith(expect.stringMatching(/Executing post-exec Validate/));
+    });
   });
 
   describe('mode inject', () => {

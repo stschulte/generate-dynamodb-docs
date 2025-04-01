@@ -4,7 +4,8 @@
 [![codecov](https://codecov.io/gh/stschulte/generate-dynamodb-docs/graph/badge.svg?token=RZ9AL50OAB)](https://codecov.io/gh/stschulte/generate-dynamodb-docs)
 [![npm version](https://badge.fury.io/js/generate-dynamodb-docs.svg)](https://badge.fury.io/js/generate-dynamodb-docs)
 
-Generate documentation about your DynamoDB table from a `dynamodb.yml` file.
+Generate documentation about your DynamoDB table from a single
+`dynamodb.yml` file.
 
 ## Why do you want to use generate-dynamodb-docs
 
@@ -12,16 +13,21 @@ AWS DynamoDB is great to store different entities in a single table (see
 also [single-table design][1].
 
 And while DynamoDB does not have a strict schema, entities normally share the
-same attributes (e.g. all "author" entities may have a "name" attribute).
+same attributes (e.g. all "author" entities may have a "name" attribute). All
+your readers and writers need to have a mutual understanding about how to
+represent entities, so you do not end up in a situation in which a writer
+writes `createdAt` and your reader tries to read `created_at`.
 
-This projects helps you to define those attributes in a single file and then
+This project helps you to define those attributes in a single file and then
 create both a markdown documentation about them and TypeScript definitions
-to be used in your code.
+to be used directly in your code.
 
 ## Install
 
-Navigate to your repository that contains your GitHub action and
-install `generate-dynamodb-docs` as a development dependency:
+Navigate to your repository where you either want to store documentation about
+your attributes or a TypeScript repository that reads/writes to your table.
+
+Install `generate-dynamodb-docs` as a development dependency:
 
 ```
 npm install --save-dev generate-generate-dynamodb-docs
@@ -29,7 +35,7 @@ npm install --save-dev generate-generate-dynamodb-docs
 
 ## Example
 
-Let's assume you have a single table that stores authors and blog posts.
+Let's assume you have a single DynamoDB table that stores authors and blog posts.
 We can describe those entities in a yaml file:
 
 ```yaml
@@ -54,7 +60,7 @@ entities:
   Author:
     typescriptName: DynamoDBAuthor
     description: |-
-      An author describes a person that writes blog posts
+      An author describes a person that writes blog posts.
       A single author can write multiple posts
     attributes:
       name:
@@ -70,7 +76,7 @@ you can now generate documentation out of this:
 % npx generate-dynamodb-docs --output-type markdown dynamodb.yml
 ### Author
 
-An author describes a person that writes blog posts
+An author describes a person that writes blog posts.
 A single author can write multiple posts
 
 | Name | Description | Required |
@@ -177,6 +183,25 @@ You can also create a task in your `package.json`:
 
 And then simply execute `npm run gen:docs` to regenerate your documentation
 after updating `dynamodb.yml`
+
+## Post actions on generated files
+
+In case you use eslint or prettier you may not be happy with the generated
+typescript file. In this case you can specify a post action that will
+automatically be executed on your file. The output file will automatically
+be appended as the last argument.
+
+```yaml
+config:
+  typescript:
+    post-exec:
+      - name: Apply eslint fixes
+        cmd: eslint
+        args:
+         - '-c'
+         - 'eslint.config.js'
+         - --fix
+```
 
 ## Generate pre and post sections
 

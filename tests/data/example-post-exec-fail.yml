@@ -1,0 +1,43 @@
+description: |-
+  An example of a file that will fail since our TypeScript refers
+  to a type (AttributeValue.SSMember) which are not available.
+  Our post actions runs tsc so this should then fail.
+
+config:
+  typescript:
+    post-exec:
+      - name: Validate
+        cmd: /bin/false
+        args:
+          - '--will-be-ignored'
+      - name: Fix with eslint
+        cmd: eslint
+
+entities:
+  Post:
+    typescriptName: DynamoDBPost
+    description: |-
+      A single post.
+
+      A post can be seen as a news article.
+    attributes:
+      title:
+        description: The title of the post
+      body:
+        description: The actual article
+      tags:
+        description: A list of tags
+        typescriptType: AttributeValue.SSMember
+        optional: true
+
+  Author:
+    typescriptName: DynamoDBAuthor
+    description: |-
+      An author describes a person that writes blog posts
+      A single author can write multiple posts
+    attributes:
+      name:
+        description: The name of the author
+      nPosts:
+        description: The number of posts of the author
+        typescriptType: AttributeValue.NMember
