@@ -22,7 +22,7 @@ export async function cli(args: string[]): Promise<number> {
   const command = new Command();
   command
     .name('generate-dynamodb-docs')
-    .version('0.1.0')
+    .version('0.2.0')
     .option('--output-file [output-file]', 'file to modify. If not specified prints on stdout')
     .addOption(new Option('--output-type [output-type]', 'Output type').choices(['markdown', 'typescript']))
     .addOption(new Option('--sections [sections...]', 'specify one or more sections to render. Available sections are "type", "inputs", "outputs"').choices(['outputs', 'inputs', 'type']))
