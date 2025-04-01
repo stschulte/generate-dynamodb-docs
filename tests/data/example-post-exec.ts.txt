@@ -1,0 +1,12 @@
+// DynamoDB Entity Author
+export type DynamoDBAuthor = {
+  name: unknown;
+  nPosts: AttributeValue.NMember;
+}
+
+// DynamoDB Entity Post
+export type DynamoDBPost = {
+  body: unknown;
+  tags?: AttributeValue.SSMember;
+  title: unknown;
+}

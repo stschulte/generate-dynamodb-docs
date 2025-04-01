@@ -184,6 +184,25 @@ You can also create a task in your `package.json`:
 And then simply execute `npm run gen:docs` to regenerate your documentation
 after updating `dynamodb.yml`
 
+## Post actions on generated files
+
+In case you use eslint or prettier you may not be happy with the generated
+typescript file. In this case you can specify a post action that will
+automatically be executed on your file. The output file will automatically
+be appended as the last argument.
+
+```yaml
+config:
+  typescript:
+    post-exec:
+      - name: Apply eslint fixes
+        cmd: eslint
+        args:
+         - '-c'
+         - 'eslint.config.js'
+         - --fix
+```
+
 ## Generate pre and post sections
 
 You can add custom text in your markdown above and below the generated text.

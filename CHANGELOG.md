@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - You can now generate post and pre sections for both markdown and typescript.
   Those will be included verbatim in the generated documents.
+- New option to run commands after generating files (e.g. prettier or eslint)
 
 ### Fixed
 

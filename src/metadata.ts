@@ -3,12 +3,14 @@ export type Entries<T> = T extends { [s: string]: infer U } ? [string, U] : neve
 export type Metadata = {
   config?: {
     markdown?: {
-      post?: string;
-      pre?: string;
+      'post'?: string;
+      'post-exec'?: MetadataExec[];
+      'pre'?: string;
     };
     typescript?: {
-      post?: string;
-      pre?: string;
+      'post'?: string;
+      'post-exec'?: MetadataExec[];
+      'pre'?: string;
     };
   };
   defaults?: {
@@ -29,6 +31,12 @@ export type Metadata = {
       typescriptName: string;
     };
   };
+};
+
+export type MetadataExec = {
+  args?: string[];
+  cmd: string;
+  name: string;
 };
 
 /**
